@@ -3,29 +3,11 @@ import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-// https://vitejs.dev/config/
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from "path" // If you're using shadcn/ui aliases
-
-export default defineConfig({
-  plugins: [react()],
-  // Replace 'Chemistrypresentationslides' with the exact name of your GitHub Repo
-  base: '/Chemistrypresentationslides/', 
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-})
-
+// Custom plugin for Figma assets
 function figmaAssetResolver() {
   return {
     name: 'figma-asset-resolver',
-    resolveId(id) {
+    resolveId(id: string) {
       if (id.startsWith('figma:asset/')) {
         const filename = id.replace('figma:asset/', '')
         return path.resolve(__dirname, 'src/assets', filename)
@@ -35,20 +17,27 @@ function figmaAssetResolver() {
 }
 
 export default defineConfig({
+  // 1. SET THE BASE PATH (Crucial for GitHub Pages)
+  base: '/Chemistrypresentationslides/', 
+
   plugins: [
     figmaAssetResolver(),
-    // The React and Tailwind plugins are both required for Make, even if
-    // Tailwind is not being actively used – do not remove them
     react(),
     tailwindcss(),
   ],
+
   resolve: {
     alias: {
-      // Alias @ to the src directory
+      // 2. SET ALIASES (Needed for shadcn/ui and your imports)
       '@': path.resolve(__dirname, './src'),
     },
   },
 
-  // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
+  // 3. INCLUDE ASSETS
   assetsInclude: ['**/*.svg', '**/*.csv'],
+
+  // Optional: Build settings to ensure output is clean
+  build: {
+    outDir: 'dist',
+  }
 })
