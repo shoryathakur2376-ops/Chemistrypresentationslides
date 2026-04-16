@@ -7,9 +7,19 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from "path" // If you're using shadcn/ui aliases
+
 export default defineConfig({
   plugins: [react()],
-  base: '/Chemistrypresentationslides/', // 👈 Replace 'your-repo-name' with your actual GitHub repository name
+  // Replace 'Chemistrypresentationslides' with the exact name of your GitHub Repo
+  base: '/Chemistrypresentationslides/', 
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
 })
 
 function figmaAssetResolver() {
