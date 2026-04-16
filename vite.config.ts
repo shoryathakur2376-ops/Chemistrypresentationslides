@@ -3,6 +3,14 @@ import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  base: '/Chemistrypresentationslides/', // 👈 Replace 'your-repo-name' with your actual GitHub repository name
+})
 
 function figmaAssetResolver() {
   return {
